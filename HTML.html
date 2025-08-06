@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangyal Tsering - Video Editor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: block;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #fff;
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .service-category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            color: #fff;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .sample-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sample-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h2 {
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-item {
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-qr {
+            max-width: 150px;
+            border-radius: 10px;
+        }
+
+        .copy-email {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-email:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .modal-video {
+            width: 100%;
+            max-width: 350px;  /* Limit width for reel format */
+            height: 600px;     /* Taller height for portrait */
+            margin: 0 auto;    /* Center the video */
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .modal-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .modal-video-wide {
+    width: 100%;
+    max-width: 800px;     /* Wide format for long-form */
+    height: 450px;        /* 16:9 aspect ratio */
+    background: #f0f0f0;
+    border-radius: 10px;
+    margin: 20px auto;    /* Center the video */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-video-wide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.modal-video-wide iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+        .external-link-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .external-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .video-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <img src="profile.jpg" alt="Sangyal Tsering" class="profile-img">
+            <h1>Sangyal Tsering</h1>
+            <p>I’m a video editor with 4 years of experience, working with over 
+                200 clients worldwide. I’m passionate about telling stories that connect, and 
+                I take pride in being reliable, creative, and always on time.<br>
+                <br>
+                Let’s create 
+                something impactful together.</p>
+        </div>
+
+        <!-- Services Section -->
+        <div class="services-section">
+            <h2 class="section-title">Our Services</h2>
+
+            <!-- Instagram Reels -->
+            <div class="service-category">
+                <h3 class="category-title">Instagram Reels</h3>
+                <div class="cards-grid">
+                    <div class="service-card" onclick="openModal('basic-reel')">
+                        <div class="card-header">
+                            <h4 class="card-title">Basic Reel</h4>
+                            <div class="card-price">₹599</div>
+                            <p class="card-description">Perfect for simple, clean content</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Professional captions</li>
+                            <li>Sound design & audio sync</li>
+                            <li>Basic transitions</li>
+                            <li>Color correction</li>
+                            <li>24-48 hour delivery</li>
+                            <li>2 revisions</li>
+                        </ul>
+                        <button class="sample-btn">View Sample & Details</button>
+                    </div>
+
+                    <div class="service-card" onclick="openModal('standard-reel')">
+                        <div class="card-header">
+                            <h4 class="card-title">Standard Reel</h4>
+                            <div class="card-price">₹1,199</div>
+                            <p class="card-description">Enhanced with graphics and effects</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Everything in Basic</li>
+                            <li>Basic graphic pop-ups</li>
+                            <li>Text animations</li>
+                            <li>Reel Cover</li>
+                            <li>48-72 hour delivery</li>
+                            <li>3 revisions</li>
+                        </ul>
+                        <button class="sample-btn">View Sample & Details</button>
+                    </div>
+
+                    <div class="service-card" onclick="openModal('premium-reel')">
+                        <div class="card-header">
+                            <h4 class="card-title">Premium Reel</h4>
+                            <div class="card-price">₹2,499</div>
+                            <p class="card-description">High-end motion graphics masterpiece</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Everything in Standard</li>
+                            <li>Advanced motion graphics</li>
+                            <li>Reel Cover</li>
+                            <li>Complex visual effects</li>
+                            <li>4-6 day delivery</li>
+                            <li>4 revisions</li>
+                        </ul>
+                        <button class="sample-btn">View Sample & Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Long-form Content -->
+            <div class="service-category">
+                <h3 class="category-title">Long-form Content</h3>
+                <div class="cards-grid">
+                    <div class="service-card" onclick="openModal('podcast-video')">
+                        <div class="card-header">
+                            <h4 class="card-title">Podcast Video</h4>
+                            <div class="card-price">₹3,999</div>
+                            <p clasCovers="card-description">Professional podcast editing</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Multi-camera synchronization</li>
+                            <li>Audio enhancement & cleanup</li>
+                            <li>1 Extracted reel</li>
+                            <li>Thumbnail and Reel Cover</li>
+                            <li>5-7 day delivery</li>
+                            <li>3 revisions</li>
+                        </ul>
+                        <button class="sample-btn">View Sample & Details</button>
+                    </div>
+
+                    <div class="service-card" onclick="openModal('educational-content')">
+                        <div class="card-header">
+                            <h4 class="card-title">Educational Content</h4>
+                            <div class="card-price">₹4,999</div>
+                            <p class="card-description">Engaging learning experiences</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Screen recording integration</li>
+                            <li>Animated explanations</li>
+                            <li>Interactive elements</li>
+                            <li>Custom graphics & charts</li>
+                            <li>7-10 day delivery</li>
+                            <li>3 revisions</li>
+                        </ul>
+                        <button class="sample-btn">View Sample & Details</button>
+                    </div>
+                </div>
+            </div>
+
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>Contact Me</h2>
+            <div class="contact-info">
+                <img src="sangyal-tsering-whatsapp-contact-scanner.jpg" alt="WhatsApp QR" class="whatsapp-qr">
+                <div class="contact-item">
+                    <span>📞 WhatsApp: +977 97075 04473</span>
+                </div>
+                <div class="contact-item">
+                    <span>📧 Email: avonead@gmail.com</span>
+                    <button class="copy-email" onclick="copyEmail()">Copy Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Content will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const serviceDetails = {
+            'basic-reel': {
+                title: 'Basic Reel - ₹599',
+                // Option 1: Direct video file (MP4, WebM, etc.)
+                videoFile:"reel1.mp4", // Add your video file path here, e.g., 'samples/basic-reel-sample.mp4'
+                
+                // Option 2: YouTube embed (extract video ID from YouTube URL)
+                youtubeId: null, // Add YouTube video ID here, e.g., 'dQw4w9WgXcQ'
+                
+                // Option 3: External links
+                instagramLink:'https://www.instagram.com/reel/DM3koWmS15g/?utm_source=ig_web_copy_link&igsh=OGRlanpub2x5bHg0', // Add Instagram reel URL here
+                
+                description: 'Perfect for straightforward content that needs professional polish. This package focuses on clean editing with professional captions and sound design.',
+                includes: [
+                    'Professional caption styling and timing',
+                    'Sound design and audio synchronization',
+                    'Basic smooth transitions',
+                    'Color correction and grading',
+                    'Fast 24-48 hour turnaround',
+                    '3 round of revisions included'
+                ],
+                process: 'Send your raw footage and any specific requirements. We\'ll deliver a polished reel ready for posting.',
+                duration: '24-48 hours'
+            },
+            'standard-reel': {
+                title: 'Standard Reel - ₹1,199',
+                videoFile: 'reel2.mp4', // Add your video file path here
+                youtubeId: null, // Add YouTube video ID here
+                instagramLink: 'https://www.instagram.com/reel/DL-mAdzyuQK/?utm_source=ig_web_copy_link', // Add Instagram reel URL here
+                youtubeLink: null, // Add full YouTube URL here
+                description: 'Enhanced editing with basic graphics and animations to make your content more engaging and eye-catching.',
+                includes: [
+                    'Everything from Basic Reel',
+                    'Basic graphic pop-ups and overlays',
+                    'Text animations and kinetic typography',
+                    'Custom transition effects',
+                    'Enhanced visual storytelling',
+                    '3 rounds of revisions included'
+                ],
+                process: 'Provide your footage along with any brand elements or specific graphic requests. Perfect for content creators looking to stand out.',
+                duration: '48-72 hours'
+            },
+            'premium-reel': {
+                title: 'Premium Reel - ₹2,499',
+                videoFile:"reel3.webm", // Add your video file path here, e.g., 'samples/basic-reel-sample.mp4
+                youtubeId: null, // Add YouTube video ID here
+                instagramLink: 'https://www.instagram.com/reel/DMD84tgx3ZI/?utm_source=ig_web_copy_link&igsh=ZW9ydGdrMDZ3dnUy', // Add Instagram reel URL here
+                description: 'High-end production with advanced motion graphics, custom animations, and complex visual effects that create truly stunning content.',
+                includes: [
+                    'Everything from Standard Reel',
+                    'Advanced motion graphics and animations',
+                    'Custom visual effects and compositing',
+                    'Complex kinetic typography',
+                    'Premium transitions and effects',
+                    '4 rounds of revisions included'
+                ],
+                process: 'Ideal for brands and creators who want cinema-quality reels. We\'ll work closely with you to create something extraordinary.',
+                duration: '3-5 days'
+            },
+            'podcast-video': {
+                title: 'Podcast Video - ₹3,999',
+                videoFile: null, // Add your video file path here
+                youtubeId: null, // Add YouTube video ID here
+                instagramLink: null, // Add Instagram reel URL here
+                youtubeLink: null, // Add full YouTube URL here
+                description: 'Professional podcast editing that keeps viewers engaged throughout long-form conversations with dynamic visuals and clean audio.',
+                includes: [
+                    'Multi-camera angle synchronization',
+                    'Professional audio enhancement and cleanup',
+                    'Extracted Reel' , 
+                    'Thumbnail and Extracted Reel Cover',
+                    'Custom intro/outro integration',
+                    'Chapter markers and timestamps'
+                ],
+                process: 'Send us your raw podcast recording files. We handle everything from sync to final delivery in your preferred format.',
+                duration: '5-7 days'
+            },
+            'educational-content': {
+                title: 'Educational Content - ₹4,999',
+                videoFile: 'educationalvideo.webm', // Add your video file path here
+                youtubeId: null, // Add YouTube video ID here
+                instagramLink: null, // Add Instagram reel URL here
+                youtubeLink: 'https://youtu.be/0z3j5i2UUF0?si=8WMWS91nSL3GFXyb', // Add full YouTube URL here
+                description: 'Transform your educational material into engaging, easy-to-follow video content with professional animations and visual aids.',
+                includes: [
+                    'Screen recording integration and optimization',
+                    'Custom animated explanations and diagrams',
+                    'Interactive visual elements',
+                    'Chapter markers for easy navigation',
+                    'Custom graphics, charts, and infographics',
+                    'Professional voiceover sync and enhancement'
+                ],
+                process: 'Perfect for online courses, tutorials, and educational content. We make complex topics easy to understand and visually appealing.',
+                duration: '7-10 days'
+            },
+        
+        };
+
+        function openModal(serviceId) {
+            const service = serviceDetails[serviceId];
+            const modal = document.getElementById('serviceModal');
+            const content = document.getElementById('modalContent');
+            
+            // Generate video content based on available options
+            let videoContent = '';
+            let externalLinks = '';
+            
+            // Check for direct video file
+            if (service.videoFile) {
+    // Determine video dimensions based on service type
+                const isLongForm = serviceId === 'podcast-video' || serviceId === 'educational-content';
+                const videoClass = isLongForm ? 'modal-video-wide' : 'modal-video';
+    
+            videoContent = `
+            <div class="${videoClass}">
+              <video controls>
+                 <source src="${service.videoFile}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+    `;
+}
+            // Check for YouTube embed
+            else if (service.youtubeId) {
+                videoContent = `
+                    <div class="modal-video">
+                        <iframe src="https://www.youtube.com/embed/${service.youtubeId}" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                `;
+            }
+            // Show placeholder if no video
+            else {
+                videoContent = `
+                    <div class="modal-video">
+                        <div class="placeholder-text">
+                            📹 Sample video will be available soon!<br>
+                            Contact me to see recent examples of this service.
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Generate external link buttons
+            if (service.instagramLink || service.youtubeLink) {
+                externalLinks = '<div class="video-links"><h4>View More Samples:</h4>';
+                
+                if (service.instagramLink) {
+                    externalLinks += `
+                        <a href="${service.instagramLink}" target="_blank" class="external-link-btn">
+                            📸 View on Instagram
+                        </a>
+                    `;
+                }
+                
+                if (service.youtubeLink) {
+                    externalLinks += `
+                        <a href="${service.youtubeLink}" target="_blank" class="external-link-btn">
+                            🎥 View on YouTube
+                        </a>
+                    `;
+                }
+                
+                externalLinks += '</div>';
+            }
+            
+            content.innerHTML = `
+                <h3>${service.title}</h3>
+                ${videoContent}
+                ${externalLinks}
+                <p><strong>Description:</strong> ${service.description}</p>
+                <br>
+                <h4>What's Included:</h4>
+                <ul>
+                    ${service.includes.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+                <br>
+                <p><strong>Process:</strong> ${service.process}</p>
+                <p><strong>Delivery Time:</strong> ${service.duration}</p>
+                <br>
+                <p style="text-align: center; margin-top: 20px;">
+                    <strong>Ready to get started? Contact me using the information below!</strong>
+                </p>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('serviceModal').style.display = 'none';
+        }
+
+        function copyEmail() {
+            navigator.clipboard.writeText('avonead@gmail.com').then(function() {
+                alert('Email copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('serviceModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
